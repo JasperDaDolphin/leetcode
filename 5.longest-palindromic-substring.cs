@@ -7,31 +7,38 @@
 // @lc code=start
 public class Solution {
     public string LongestPalindrome(string s) {
-        var finalLongest = "";
-        var currentLongest = "";
-        var startPointer = 0;
-        var endPointer = 0;
-        while (startPointer <= s.Length - 1 && endPointer <= s.Length - 1)
+        var longest = "";
+        for (var pointer = 0; pointer < s.Length; pointer++)
         {
-            var nextChar = s[endPointer];
-            if (currentLongest.Length == 0 || nextChar == currentLongest[0])
+            var current = "";
+            for (var rp = pointer; rp < s.Length; rp++)
             {
-                currentLongest = currentLongest + nextChar;
-                endPointer++;
-            }
-            else
-            {
-                currentLongest = "";
-                startPointer++;
-                endPointer = startPointer;
-            }
-
-            if (currentLongest.Length > finalLongest.Length)
-            {
-                finalLongest = currentLongest;
+                current += s[rp];
+                if (current.Length > longest.Length && IsPalindrome(current))
+                {
+                    longest = current;
+                }
             }
         }
-        return finalLongest;
+
+        return longest;
+    }
+
+    public bool IsPalindrome(string s)
+    {
+        int p1 = 0;
+        int p2 = s.Length - 1;
+
+        while (p1 < s.Length/2)
+        {
+            if (s[p1] != s[p2])
+            {
+                return false;
+            }
+            p1++;
+            p2--;
+        }
+        return true;
     }
 }
 // @lc code=end
